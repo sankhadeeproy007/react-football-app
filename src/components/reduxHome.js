@@ -21,10 +21,11 @@ export default class ReduxHome extends Component {
     }
 
     render() {
-        const { user, tweets } = this.props;
+
+        const { props: { user, tweets } } = this;
 
         if (!tweets.length) {
-            return <button onClick={this.fetchTweets.bind(this)}>load tweets</button>
+            return <button onClick= {()=>this.fetchTweets()}>load tweets</button>
         }
 
         const mappedTweets = tweets.map(tweet => <li>{tweet.text}</li>)

@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { Link } from 'react-router';
+
+import { fetchCompetitions } from "../actions/competitionsActions";
+
 import '../styles/css/App.css';
 
-export default class Home extends Component {
+class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,8 +28,8 @@ export default class Home extends Component {
         return (
             <div className="center">
                 <ul>
-                    {this.state.competitions.slice(1).map((item) => {
-                        return (<li key={item.id}>
+                    {this.state.competitions.slice(1).map((item, i) => {
+                        return (<li key={i}>
                             <Link to={"/details/"+item.id}>{item.caption}</Link>
                         </li>);
                     })}
