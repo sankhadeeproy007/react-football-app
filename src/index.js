@@ -7,7 +7,7 @@ import store from './store';
 
 import App from './containers/AppContainer';
 import Home from './components/Home';
-// import ReduxHome from './components/ReduxHome';
+import ReduxHome from './components/ReduxHome';
 import Details from './components/Details';
 
 import './styles/css/index.css';
