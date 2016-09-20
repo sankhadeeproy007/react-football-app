@@ -1,41 +1,23 @@
 import React, { Component } from 'react';
-import '../styles/css/App.css';
+import { connect } from 'react-redux';
 
-export default class Details extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            competition : [],
-            teams: []
-        };
-        fetch('http://api.football-data.org/v1/competitions/'+this.props.params.leagueID, {
-        headers: {
-            'X-Auth-Token' : 'fbaab43fd911448aaedd92e84d466d49'
-        }})
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-                competition: responseJson
-            });
-        });
-        fetch('http://api.football-data.org/v1/competitions/'+this.props.params.leagueID+'/teams', {
-        headers: {
-            'X-Auth-Token' : 'fbaab43fd911448aaedd92e84d466d49'
-        }})
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-                teams: responseJson.teams
-            });
-        });
+import { fetchTeams } from "../actions/competitionsActions";
+
+class Details extends Component {
+
+    componentWillMount() {
+        this.props.dispatch(fetchTeams(this.props.params.leagueID));
     }
+
     render() {
+        const { props: { teams } } = this;
+
         return(
             <div className="center">
-                {this.state.competition.caption} <br /><br />
+                {/*{this.state.competition.caption} <br /><br />*/}
                 Teams:
                 <ul>
-                    {this.state.teams.map((item) => {
+                    {teams.map((item) => {
                     return (<li key={item.name+'id'}>
                         {item.name}
                     </li>);
@@ -44,5 +26,12 @@ export default class Details extends Component {
             </div>
         );
     }
-
 }
+
+function mapStateToProps(state) {
+    return {
+        teams: state.teams.teams,
+    };
+}
+
+export default connect(mapStateToProps)(Details);

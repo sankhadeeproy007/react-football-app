@@ -14,3 +14,18 @@ export function fetchCompetitions() {
         });
     };
 }
+
+export function fetchTeams(leagueID) {
+    return function(dispatch) {
+        axios.get('http://api.football-data.org/v1/competitions/'+leagueID+'/teams', {
+        headers: {
+            'X-Auth-Token' : 'fbaab43fd911448aaedd92e84d466d49'
+        }})
+        .then((response) => {
+            dispatch({type: "FETCH_TEAMS_FULFILLED", payload: response.data});
+        })
+        .catch((err) => {
+            dispatch({type: "FETCH_TEAMS_REJECTED", payload: err});
+        });
+    };
+}
