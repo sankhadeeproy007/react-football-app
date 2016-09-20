@@ -11,6 +11,7 @@ import '../styles/css/App.css';
 class Home extends Component {
 
     componentWillMount() {
+        console.log('Button', Button);
         this.props.dispatch(fetchCompetitions());
     }
 
