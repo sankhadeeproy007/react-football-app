@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router';
+import { Button } from 'react-toolbox/lib/button';
+
 
 import { fetchCompetitions } from "../actions/competitionsActions";
 
@@ -16,6 +18,7 @@ class Home extends Component {
         const { props: { competitions } } = this;
         return (
             <div className="center">
+             <Button label="Hello World!" />
                 <ul>
                     {competitions.slice(1).map((item, i) => {
                         return (<li key={i}>
