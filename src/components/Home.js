@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router';
 import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 import { fetchCompetitions } from "../actions/competitionsActions";
 
@@ -18,6 +19,7 @@ class Home extends Component {
         return (
             <div>
                 <List>
+                    <Subheader>Select Competitiion</Subheader>
                     {competitions.slice(1).map((item, i) => {
                         return (<Link to={"/details/"+item.id}>
                         <ListItem key={i}>
