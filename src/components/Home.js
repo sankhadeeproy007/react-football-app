@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router';
-import RaisedButton from 'material-ui/RaisedButton';
+import {List, ListItem} from 'material-ui/List';
 
 import { fetchCompetitions } from "../actions/competitionsActions";
 
@@ -16,15 +16,16 @@ class Home extends Component {
     render() {
         const { props: { competitions } } = this;
         return (
-            <div className="center">
-            <RaisedButton label="Default" />
-                <ul>
+            <div>
+                <List>
                     {competitions.slice(1).map((item, i) => {
-                        return (<li key={i}>
-                            <Link to={"/details/"+item.id}>{item.caption}</Link>
-                        </li>);
+                        return (<Link to={"/details/"+item.id}>
+                        <ListItem key={i}>
+                            {item.caption}
+                        </ListItem>
+                    </Link>);
                     })}
-                </ul>
+                </List>
             </div>
         );
     }
