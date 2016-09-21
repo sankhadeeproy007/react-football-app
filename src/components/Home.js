@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router';
-import { Button } from 'react-toolbox/lib/button';
-
+import RaisedButton from 'material-ui/RaisedButton';
 
 import { fetchCompetitions } from "../actions/competitionsActions";
 
@@ -11,7 +10,6 @@ import '../styles/css/App.css';
 class Home extends Component {
 
     componentWillMount() {
-        console.log('Button', Button);
         this.props.dispatch(fetchCompetitions());
     }
 
@@ -19,7 +17,7 @@ class Home extends Component {
         const { props: { competitions } } = this;
         return (
             <div className="center">
-             <Button label="Hello World!" />
+            <RaisedButton label="Default" />
                 <ul>
                     {competitions.slice(1).map((item, i) => {
                         return (<li key={i}>
