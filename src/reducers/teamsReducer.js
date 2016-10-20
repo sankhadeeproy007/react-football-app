@@ -20,6 +20,9 @@ export default function reducer(state={
                 teams: action.payload.teams,
             };
         }
+        case "FETCH_TEAMS_RESET": {
+            return {...state, fetched: false};
+        }
         default:
             return state;
     }

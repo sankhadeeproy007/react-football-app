@@ -8,6 +8,7 @@ export function fetchCompetitions() {
         }})
         .then((response) => {
             dispatch({type: "FETCH_COMPETITIONS_FULFILLED", payload: response.data});
+            dispatch({type: "FETCH_TEAMS_RESET"});
         })
         .catch((err) => {
             dispatch({type: "FETCH_COMPETITIONS_REJECTED", payload: err});

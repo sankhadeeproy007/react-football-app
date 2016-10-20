@@ -10,18 +10,19 @@ class Details extends Component {
     }
 
     render() {
-        const { props: { teams, name } } = this;
+        const { props: { teams, name, fetched } } = this;
+        console.log(fetched);
         return(
             <div className="center">
                 {name} <br /><br />
                 Teams:
-                <ul>
+                {(fetched) ? <ul>
                     {teams.map((item) => {
                     return (<li key={item.name+'id'}>
                         {item.name}
                     </li>);
                     })}
-                </ul>
+                </ul> : <div>Loading</div>}
             </div>
         );
     }
@@ -30,6 +31,7 @@ class Details extends Component {
 function mapStateToProps(state) {
     return {
         teams: state.teams.teams,
+        fetched: state.teams.fetched,
         name: state.competitions.competitionName,
     };
 }
