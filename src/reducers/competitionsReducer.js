@@ -2,6 +2,7 @@ export default function reducer(state={
     competitions: [],
     fetching: false,
     fetched: false,
+    competitionName: undefined,
     error: null,
 }, action) {
 
@@ -19,6 +20,12 @@ export default function reducer(state={
                 fetched: true,
                 competitions: action.payload,
             };
+        }
+        case "SET_COMPETION_NAME": {
+            return {
+                ...state,
+                competitionName: action.payload
+            }
         }
         default:
             return state;

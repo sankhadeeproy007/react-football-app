@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
-import { fetchCompetitions } from "../actions/competitionsActions";
+import { fetchCompetitions, setCompetitionName } from "../actions/competitionsActions";
 
 import '../styles/css/App.css';
 
@@ -14,6 +14,10 @@ class Home extends Component {
         this.props.dispatch(fetchCompetitions());
     }
 
+    setCompetition(competitionName) {
+      this.props.dispatch(setCompetitionName(competitionName));
+    }
+
     render() {
         const { props: { competitions } } = this;
         return (
@@ -21,7 +25,7 @@ class Home extends Component {
                 <List>
                     <Subheader>Select Competitiion</Subheader>
                     {competitions.slice(1).map((item, i) => {
-                        return (<Link activeStyle={{ textDecoration: 'none' }} key={i} to={"/details/"+item.id}>
+                        return (<Link onClick={()=> this.setCompetition(item.caption)} activeStyle={{ textDecoration: 'none' }} key={i} to={"/details/"+item.id}>
                         <ListItem>
                             {item.caption}
                         </ListItem>

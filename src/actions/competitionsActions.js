@@ -15,6 +15,12 @@ export function fetchCompetitions() {
     };
 }
 
+export function setCompetitionName(competitionName) {
+    return function(dispatch) {
+        dispatch({type: "SET_COMPETION_NAME", payload: competitionName});
+    };
+}
+
 export function fetchTeams(leagueID) {
     return function(dispatch) {
         axios.get('http://api.football-data.org/v1/competitions/'+leagueID+'/teams', {
