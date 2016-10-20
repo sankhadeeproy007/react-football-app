@@ -10,19 +10,19 @@ class Details extends Component {
     }
 
     render() {
-        const { props: { teams } } = this;
+        const { props: { teams, fetched } } = this;
 
         return(
             <div className="center">
                 {/*{this.state.competition.caption} <br /><br />*/}
                 Teams:
-                <ul>
+                {(fetched) ? <ul>
                     {teams.map((item) => {
                     return (<li key={item.name+'id'}>
                         {item.name}
                     </li>);
                     })}
-                </ul>
+                </ul> : <div />}
             </div>
         );
     }
@@ -31,6 +31,7 @@ class Details extends Component {
 function mapStateToProps(state) {
     return {
         teams: state.teams.teams,
+        fetched: state.teams.fetched,
     };
 }
 

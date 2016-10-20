@@ -21,8 +21,8 @@ class Home extends Component {
                 <List>
                     <Subheader>Select Competitiion</Subheader>
                     {competitions.slice(1).map((item, i) => {
-                        return (<Link to={"/details/"+item.id}>
-                        <ListItem key={i}>
+                        return (<Link activeStyle={{ textDecoration: 'none' }} key={i} to={"/details/"+item.id}>
+                        <ListItem>
                             {item.caption}
                         </ListItem>
                     </Link>);
