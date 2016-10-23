@@ -10,6 +10,7 @@ export function fetchCompetitions() {
             dispatch({type: "FETCH_COMPETITIONS_FULFILLED", payload: response.data});
             dispatch({type: "FETCH_TEAMS_RESET"});
             dispatch({type: "FETCH_TABLE_RESET"});
+            dispatch({type: "FETCH_FIXTURES_RESET"});
         })
         .catch((err) => {
             dispatch({type: "FETCH_COMPETITIONS_REJECTED", payload: err});
@@ -37,6 +38,22 @@ export function fetchTeams(leagueID) {
         });
     };
 }
+
+export function fetchFixtures(leagueID, matchday) {
+    return function(dispatch) {
+        axios.get('http://api.football-data.org/v1/competitions/'+leagueID+'/fixtures/?matchday='+matchday, {
+        headers: {
+            'X-Auth-Token' : 'fbaab43fd911448aaedd92e84d466d49'
+        }})
+        .then((response) => {
+            dispatch({type: "FETCH_FIXTURES_FULFILLED", payload: response.data});
+        })
+        .catch((err) => {
+            dispatch({type: "FETCH_FIXTURES_REJECTED", payload: err});
+        });
+    };
+}
+
 
 export function fetchTable(leagueID) {
     return function(dispatch) {

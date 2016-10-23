@@ -4,7 +4,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 
 import { connect } from 'react-redux';
 
-import { fetchTeams, fetchTable } from "../actions/competitionsActions";
+import { fetchTeams, fetchTable, fetchFixtures } from "../actions/competitionsActions";
 
 class Details extends Component {
 
@@ -13,8 +13,13 @@ class Details extends Component {
         this.props.dispatch(fetchTable(this.props.params.leagueID));
     }
 
+    getFixtures() {
+        this.props.dispatch(fetchFixtures(this.props.params.leagueID, this.props.matchday));
+    }
+
     render() {
-        const { props: { teams, name, fetched, table, tableFetched } } = this;
+        const { props: { teams, name, fetched, table, tableFetched, fixtures, fixturesFetched } } = this;
+        console.log('fixtures', fixtures);
         return(
             <div className="center">
                 {name} <br /><br />
@@ -28,26 +33,22 @@ class Details extends Component {
                                   <TableHeaderColumn>Position</TableHeaderColumn>
                                   <TableHeaderColumn>Team</TableHeaderColumn>
                                   <TableHeaderColumn>Played</TableHeaderColumn>
-                                  <TableHeaderColumn>Goals for</TableHeaderColumn>
-                                  <TableHeaderColumn>Goals against</TableHeaderColumn>
                                   <TableHeaderColumn>GD</TableHeaderColumn>
                                   <TableHeaderColumn>Points</TableHeaderColumn>
                                 </TableRow>
                               </TableHeader>
                               <TableBody displayRowCheckbox={false}>
-                                {table.map((item, i) => {
-                                    return (
-                                      <TableRow key={i}>
-                                        <TableRowColumn>{item.position}</TableRowColumn>
-                                        <TableRowColumn>{item.teamName}</TableRowColumn>
-                                        <TableRowColumn>{item.playedGames}</TableRowColumn>
-                                        <TableRowColumn>{item.goals}</TableRowColumn>
-                                        <TableRowColumn>{item.goalsAgainst}</TableRowColumn>
-                                        <TableRowColumn>{item.goalDifference}</TableRowColumn>
-                                        <TableRowColumn>{item.points}</TableRowColumn>
-                                      </TableRow>
-                                    )
-                                })}
+                                  {table.map((item, i) => {
+                                      return (
+                                          <TableRow key={i}>
+                                              <TableRowColumn>{item.position}</TableRowColumn>
+                                              <TableRowColumn>{item.teamName}</TableRowColumn>
+                                              <TableRowColumn>{item.playedGames}</TableRowColumn>
+                                              <TableRowColumn>{item.goalDifference}</TableRowColumn>
+                                              <TableRowColumn>{item.points}</TableRowColumn>
+                                          </TableRow>
+                                      )
+                                  })}
                               </TableBody>
                             </Table>
                             : <div>Loading</div>}
@@ -64,6 +65,17 @@ class Details extends Component {
                       </ul> : <div>Loading</div>}
                     </div>
                   </Tab>
+                  <Tab label="Fixtures" onActive={()=> this.getFixtures()}>
+                    <div>
+                      {(fixturesFetched) ? <div>
+                        {fixtures.map((item, i) => {
+                          return (<div key={i} style={{margin: 20}}>
+                          {item.homeTeamName} vs {item.awayTeamName}
+                        </div>);
+                      })}
+                    </div> : <div>Loading</div>}
+                  </div>
+                </Tab>
                 </Tabs>
             </div>
         );
@@ -76,7 +88,10 @@ function mapStateToProps(state) {
         fetched: state.teams.fetched,
         name: state.competitions.competitionName,
         table: state.table.table,
+        matchday: state.table.matchday,
         tableFetched: state.table.fetched,
+        fixturesFetched: state.fixtures.fetched,
+        fixtures: state.fixtures.fixtures,
     };
 }
 
