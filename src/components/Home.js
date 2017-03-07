@@ -1,46 +1,43 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
 
-import { fetchCompetitions, setCompetitionName } from "../actions/competitionsActions";
+import { increment, decrement, reset } from "../actions/counterActions";
 
 import '../styles/css/App.css';
 
 class Home extends Component {
 
-    componentWillMount() {
-        this.props.dispatch(fetchCompetitions());
-    }
-
-    setCompetition(competitionName) {
-      this.props.dispatch(setCompetitionName(competitionName));
-    }
-
-    render() {
-        const { props: { competitions } } = this;
-        return (
-            <div>
-                <List>
-                    <Subheader>Select Competitiion</Subheader>
-                    {competitions.slice(1).map((item, i) => {
-                        return (<Link onClick={()=> this.setCompetition(item.caption)} activeStyle={{ textDecoration: 'none' }} key={i} to={"/details/"+item.id}>
-                        <ListItem>
-                            {item.caption}
-                        </ListItem>
-                    </Link>);
-                    })}
-                </List>
-            </div>
-        );
-    }
+  render() {
+    const { props: { count } } = this
+    return (
+      <div style={{padding: 30}}>
+        Count is: {count}
+        <br />
+        <button onClick={()=> this.props.increment()} style={{margin: 10, padding: 10}}>Increment</button>
+        <button onClick={()=> this.props.decrement()} style={{margin: 10, padding: 10}}>Decrement</button>
+        <button onClick={()=> this.props.reset()} style={{margin: 10, padding: 10}}>Reset</button>
+        <br />
+        <Link to="next">next page</Link>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return {
-        competitions: state.competitions.competitions,
-    };
+  return {
+    count: state.counter.count
+  };
 }
 
-export default connect(mapStateToProps)(Home);
+function bindActions(dispatch) {
+  return {
+    increment: ()=> dispatch(increment()),
+    decrement: ()=> dispatch(decrement()),
+    reset: ()=> dispatch(reset())
+  };
+}
+
+
+
+export default connect(mapStateToProps, bindActions)(Home);
