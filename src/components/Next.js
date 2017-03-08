@@ -3,10 +3,11 @@ import { connect } from "react-redux";
 
 import '../styles/css/App.css';
 
-class Home extends Component {
+class Next extends Component {
 
   render() {
-    const { props: { count } } = this
+    // const { props: { count } } = this;
+    const count = this.props.count;
     return (
       <div style={{padding: 30}}>
         2nd page Count is: {count}
@@ -21,4 +22,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Next);

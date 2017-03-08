@@ -4,6 +4,13 @@ export function increment() {
   };
 }
 
+export function increment5(value) {
+  return {
+    type: "INCREMENT_CUSTOM",
+    payload: parseInt(value)
+  };
+}
+
 export function decrement() {
   return {
     type: "DECREMENT"
